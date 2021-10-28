@@ -8,8 +8,8 @@
 	<name>queueworkers</name>
 	<description>simple project to back a social network discussion on component teams vs cross functional teams</description>
 	<properties>
-		<maven.compiler.target>1.11</maven.compiler.target>
-		<maven.compiler.source>1.11</maven.compiler.source>
+		<maven.compiler.target>1.16</maven.compiler.target>
+		<maven.compiler.source>1.16</maven.compiler.source>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
