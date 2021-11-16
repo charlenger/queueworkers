@@ -14,5 +14,8 @@ public class WorkItemTest {
 		WorkItem item2 = new WorkItem(3, 2);
 		assertEquals(3, item2.getWorkload());
 		assertEquals(2, item2.getCategory());
+		WorkItem item3 = new WorkItem(item);
+		assertEquals(item.getCategory(), item3.getCategory());
+		assertEquals(item.getWorkload(), item3.getWorkload());
 	}
 }

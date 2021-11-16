@@ -9,6 +9,11 @@ public class WorkItem {
 		this.category = category;
 	}
 
+	public WorkItem(WorkItem item) {
+		this.workload = item.getWorkload();
+		this.category = item.getCategory();
+	}
+
 	public int getWorkload() {
 		return this.workload;
 	}

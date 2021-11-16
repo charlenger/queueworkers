@@ -2,6 +2,7 @@ package org.cahung.it.queueworkers.work;
 
 import java.security.SecureRandom;
 import java.util.LinkedList;
+import java.util.List;
 
 public class RandomBatch implements Batch {
 	private int size;
@@ -15,6 +16,18 @@ public class RandomBatch implements Batch {
 		this.maxWorkload = maxWorkload;
 		this.maxCategories = maxCategories;
 		initializeQueue();
+	}
+
+	public RandomBatch(Batch batch1) {
+		super();
+		cloneQueue(batch1);
+	}
+
+	private void cloneQueue(Batch batch1) {
+		queue = new LinkedList<WorkItem>();
+		for (WorkItem item : batch1.getQueue()) {
+			queue.add(new WorkItem(item));
+		}
 	}
 
 	private void initializeQueue() {
@@ -39,6 +52,11 @@ public class RandomBatch implements Batch {
 	@Override
 	public int getSize() {
 		return queue.size();
+	}
+
+	@Override
+	public List<WorkItem> getQueue() {
+		return queue;
 	}
 
 }
