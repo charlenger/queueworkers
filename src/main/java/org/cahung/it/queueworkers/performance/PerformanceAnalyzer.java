@@ -29,7 +29,7 @@ public class PerformanceAnalyzer {
 		// Create the two workforces
 		int numberOfTeams = 10;
 		int teamMaxPerformance = 10;
-		float modifier = 2.0f;
+		float modifier = 5.0f;
 		Workforce siloed = new SiloedWorkforce(numberOfTeams, (int) (teamMaxPerformance * modifier),
 				TeamPerformanceType.FIXED, categories);
 		Workforce xfunc = new CrossFunctionalWorkforce(numberOfTeams, teamMaxPerformance, TeamPerformanceType.FIXED,
