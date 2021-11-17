@@ -14,7 +14,7 @@ public class BatchTest {
 		while (!batch.isEmpty()) {
 			WorkItem item = batch.pull();
 			assertTrue(item.getWorkload() < 10);
-			assertTrue(item.getCategory() < 3);
+			assertTrue(item.getCategory() < 4);
 		}
 		assertEquals(0, batch.getSize());
 	}

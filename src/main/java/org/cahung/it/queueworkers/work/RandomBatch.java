@@ -34,7 +34,7 @@ public class RandomBatch implements Batch {
 		queue = new LinkedList<WorkItem>();
 		SecureRandom random = new SecureRandom();
 		for (int i = 0; i < size; ++i) {
-			WorkItem item = new WorkItem(random.nextInt(maxWorkload), random.nextInt(maxCategories));
+			WorkItem item = new WorkItem(random.nextInt(maxWorkload), 1 + random.nextInt(maxCategories));
 			queue.add(item);
 		}
 	}

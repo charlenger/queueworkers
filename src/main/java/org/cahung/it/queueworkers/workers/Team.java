@@ -41,4 +41,16 @@ public class Team {
 		return this.id;
 	}
 
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Team)) {
+			return false;
+		}
+		return id.equals(((Team) obj).id);
+	}
 }

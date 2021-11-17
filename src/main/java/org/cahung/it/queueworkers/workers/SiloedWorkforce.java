@@ -7,12 +7,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.cahung.it.queueworkers.work.WorkItem;
+
 public class SiloedWorkforce extends QueueBasedBatchWorkforce {
 	private Map<Integer, LinkedList<Team>> teams;
 	private SecureRandom random = new SecureRandom();
+	private int numberOfTeams;
 
 	public SiloedWorkforce(int numberOfTeams, int performanceLevel, TeamPerformanceType type, int[] categories) {
 		super();
+		this.numberOfTeams = numberOfTeams;
 		int currentCategoryIdx = 0;
 		this.teams = new HashMap<>();
 		for (int i = 0; i < numberOfTeams; ++i) {
@@ -51,5 +55,48 @@ public class SiloedWorkforce extends QueueBasedBatchWorkforce {
 			teamsList.addAll(list);
 		}
 		return teamsList;
+	}
+
+	@Override
+	public void doWorkCycle() {
+		synchronized (queue) {
+			runWorkInProgress();
+			addWorkInProgress();
+		}
+	}
+
+	private void runWorkInProgress() {
+		List<WorkItem> done = new ArrayList<>();
+		for (Map.Entry<WorkItem, Team> wip : workInProgressMapping.entrySet()) {
+			Team team = wip.getValue();
+			WorkItem item = wip.getKey();
+			team.workOn(item);
+			if (item.getWorkload() <= 0) {
+				done.add(item);
+				workInProgress.remove(item);
+				workingTeams.remove(team);
+				LinkedList<Team> categoryTeams = teams.get(Integer.valueOf(item.getCategory()));
+				categoryTeams.add(team);
+				teams.put(Integer.valueOf(item.getCategory()), categoryTeams);
+			}
+		}
+		for (WorkItem item : done) {
+			workInProgressMapping.remove(item);
+		}
+	}
+
+	private void addWorkInProgress() {
+		if (workingTeams.size() < numberOfTeams) {
+			WorkItem item = queue.pollLast();
+			LinkedList<Team> teamsForCategory = teams.get(Integer.valueOf(item.getCategory()));
+			if (!teamsForCategory.isEmpty()) {
+				Team team = teamsForCategory.pop();
+				workInProgress.add(item);
+				workingTeams.add(team);
+				workInProgressMapping.put(item, team);
+			} else {
+				queue.addLast(item);
+			}
+		}
 	}
 }

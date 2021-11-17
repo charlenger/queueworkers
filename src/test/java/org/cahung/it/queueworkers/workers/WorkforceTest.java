@@ -26,5 +26,9 @@ public class WorkforceTest {
 		for (Team team : xfuncWorkforce.getTeams()) {
 			assertEquals(10, team.getPerformanceLevel());
 		}
+		siloedWorkforce.processQueue(100);
+		assertEquals(0, siloedWorkforce.getQueueSize());
+		xfuncWorkforce.processQueue(100);
+		assertEquals(0, xfuncWorkforce.getQueueSize());
 	}
 }
